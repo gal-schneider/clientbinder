@@ -1,6 +1,8 @@
 <html>
-<body>
-gal
-	<script src="\js\jsUnits.js"></script>
-</body>
+	<head>
+	</head>
+	<body>
+		gal23
+		<script src="/client-binder-web/js/jsUnits.js"></script>
+	</body>
 </html>

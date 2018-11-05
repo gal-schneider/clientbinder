@@ -7,84 +7,44 @@
     <script src="identify_browser.js"></script>
 </head>
 <body>
-    How to login to Dynamodb
-    Copied from https://s3.amazonaws.com/startup-blog-examples/example-dynamodb.html#
-
-  
-    <div id="amazon-root"></div>
+    1. try tusing AWS from https://s3.amazonaws.com/startup-blog-examples/example-dynamodb.html#
+    2. try using google from https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/config-web-identity-examples.html
     
-    <div id="browserCount"></div>
-    <br /><a href="#" id="login">Login</a>
-    <a href="#" id="logout"></a>
+    <span
+  id="login"
+  class="g-signin"
+  data-height="short"
+  data-callback="loginToGoogle"
+  data-cookiepolicy="single_host_origin"
+  data-requestvisibleactions="http://schemas.google.com/AddActivity"
+  data-scope="https://www.googleapis.com/auth/plus.login">
+</span>
+<script type="text/javascript">
+  var s3 = null;
+  var clientID = '1234567890.apps.googleusercontent.com'; // Google client ID
+  var roleArn = 'arn:aws:iam::<AWS_ACCOUNT_ID>:role/<WEB_IDENTITY_ROLE_NAME>';
 
-    <div id="results"></div>
+  document.getElementById('login').setAttribute('data-clientid', clientID);
+  function loginToGoogle(response) {
+    if (!response.error) {
+      AWS.config.credentials = new AWS.WebIdentityCredentials({
+        RoleArn: roleArn, WebIdentityToken: response.id_token
+      });
 
-    <script type="text/javascript">
-   
-    // IAM Role that you create for Login With Amazon
-    var roleArn = 'arn:aws:iam::368101875365:role/login-with-amazon_dynamodb-d3';
+      s3 = new AWS.S3();
 
-    // Login with Amazon
-    window.onAmazonLoginReady = function() {
-        amazon.Login.setClientId('amzn1.application-oa2-client.c86fbf2d48a84150be9615524c316a21');
-    };
-    (function(d) {
-        var a = d.createElement('script'); a.type = 'text/javascript';
-        a.async = true; a.id = 'amazon-login-sdk'; 
-        a.src = 'https://api-cdn.amazon.com/sdk/login1.js?v=3';
-        d.getElementById('amazon-root').appendChild(a);
-    })(document);
-
-    /* if the Login With Amazon authentication is successful
-       then detect the browser being used and push it into a DynamoDB table, 
-       returning the updated count if the put is successful */
-    function amazonAuth(response) {
-        if (response.error) {
-            console.log(response.error);
-            return;
-        } 
-        AWS.config.credentials = new AWS.WebIdentityCredentials({
-            RoleArn: roleArn,
-            ProviderId: 'www.amazon.com',
-            WebIdentityToken: response.access_token
-        });
-        amazon.Login.retrieveProfile(response.access_token, function(response) {
-            AWS.config.region = 'us-east-1';
-            var db = new AWS.DynamoDB();
-            var detectedBrowser = identifyBrowser();
-            var params = {
-                TableName: 'browser-metrics',
-                Key: {'browser': {'S': detectedBrowser.n}, 'version': {'S': detectedBrowser.v}},
-                AttributeUpdates: {'count': {Action: 'ADD', Value: {N: '1'}}},
-                ReturnValues: 'UPDATED_NEW'
-            }
-            db.updateItem(params, function(err, data) {
-                if (err) console.log(err, err.stack);
-                else     updateBrowserCount(data);
-            });
-        });
+      console.log('You are now logged in.');
+    } else {
+      console.log('There was a problem logging you in.');
     }
+  }
 
-    // display current detected browser count
-    function updateBrowserCount(data) {
-        document.getElementById('login').innerHTML = '';
-        document.getElementById('logout').innerHTML = 'Logout';
-        document.getElementById('browserCount').innerHTML = 'Successful authentications by people with browsers like yours: ' + data.Attributes.count.N;
-    }
-    
-    // login with Amazon when you click the Login link
-    document.getElementById('login').onclick = function() {
-        options = { scope : 'profile' };
-        amazon.Login.authorize(options, amazonAuth);
-    };
-
-    // logout when you click the Logout link
-    document.getElementById('logout').onclick = function() {
-        amazon.Login.logout();
-        location.reload();
-    };
-
-    </script>
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/client:plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+ </script>
 </body>
 </html>
 

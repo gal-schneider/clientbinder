@@ -1,2 +1,2 @@
 var txt = document.createTextNode(" This text was added to the DIV.");
-document.getElementById("body").appendChild(txt);
+document.getElementById("1").appendChild(txt);

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AWS Javascript Browser SDK: DynamoDB</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
+    <script src="identify_browser.js"></script>
+</head>
+<body>
+    <div id="amazon-root"></div>
+    
+    <div id="browserCount"></div>
+    <br /><a href="#" id="login">Login</a>
+    <a href="#" id="logout"></a>
+
+    <div id="results"></div>
+
+    <script type="text/javascript">
+   
+    // IAM Role that you create for Login With Amazon
+    var roleArn = 'arn:aws:iam::077300967209:role/login-with-amazon_dynamodb-d3';
+
+    // Login with Amazon
+    window.onAmazonLoginReady = function() {
+        amazon.Login.setClientId('amzn1.application-oa2-client.c86fbf2d48a84150be9615524c316a21');
+    };
+    (function(d) {
+        var a = d.createElement('script'); a.type = 'text/javascript';
+        a.async = true; a.id = 'amazon-login-sdk'; 
+        a.src = 'https://api-cdn.amazon.com/sdk/login1.js?v=3';
+        d.getElementById('amazon-root').appendChild(a);
+    })(document);
+
+    /* if the Login With Amazon authentication is successful
+       then detect the browser being used and push it into a DynamoDB table, 
+       returning the updated count if the put is successful */
+    function amazonAuth(response) {
+        if (response.error) {
+            console.log(response.error);
+            return;
+        } 
+        AWS.config.credentials = new AWS.WebIdentityCredentials({
+            RoleArn: roleArn,
+            ProviderId: 'www.amazon.com',
+            WebIdentityToken: response.access_token
+        });
+        amazon.Login.retrieveProfile(response.access_token, function(response) {
+            AWS.config.region = 'us-east-1';
+            var db = new AWS.DynamoDB();
+            var detectedBrowser = identifyBrowser();
+            var params = {
+                TableName: 'browser-metrics',
+                Key: {'browser': {'S': detectedBrowser.n}, 'version': {'S': detectedBrowser.v}},
+                AttributeUpdates: {'count': {Action: 'ADD', Value: {N: '1'}}},
+                ReturnValues: 'UPDATED_NEW'
+            }
+            db.updateItem(params, function(err, data) {
+                if (err) console.log(err, err.stack);
+                else     updateBrowserCount(data);
+            });
+        });
+    }
+
+    // display current detected browser count
+    function updateBrowserCount(data) {
+        document.getElementById('login').innerHTML = '';
+        document.getElementById('logout').innerHTML = 'Logout';
+        document.getElementById('browserCount').innerHTML = 'Successful authentications by people with browsers like yours: ' + data.Attributes.count.N;
+    }
+    
+    // login with Amazon when you click the Login link
+    document.getElementById('login').onclick = function() {
+        options = { scope : 'profile' };
+        amazon.Login.authorize(options, amazonAuth);
+    };
+
+    // logout when you click the Logout link
+    document.getElementById('logout').onclick = function() {
+        amazon.Login.logout();
+        location.reload();
+    };
+
+    </script>
+</body>
+</html>

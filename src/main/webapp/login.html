@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 234
+    gal login 777
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -44,7 +44,7 @@
             WebIdentityToken: response.access_token
         });
         amazon.Login.retrieveProfile(response.access_token, function(response) {
-            AWS.config.region = 'us-east-1';
+            AWS.config.region = 'eu-west-1';
             var db = new AWS.DynamoDB();
             var detectedBrowser = identifyBrowser();
             var params = {

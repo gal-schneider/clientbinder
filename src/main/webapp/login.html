@@ -6,7 +6,7 @@
     <script src="identify_browser.js"></script>
 </head>
 <body>
-    gal login 123
+    gal login 456
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -63,6 +63,7 @@
 
     // display current detected browser count
     function updateBrowserCount(data) {
+        console.log(data);
         document.getElementById('login').innerHTML = '';
         document.getElementById('logout').innerHTML = 'Logout';
         document.getElementById('browserCount').innerHTML = 'Successful authentications by people with browsers like yours: ' + data.Attributes.count.N;

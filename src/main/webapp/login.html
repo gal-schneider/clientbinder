@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 555
+    gal login 111
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -25,7 +25,8 @@
     };
     (function(d) {
         var a = d.createElement('script'); a.type = 'text/javascript';
-        a.async = true; a.id = 'amazon-login-sdk'; 
+        a.async = true; 
+        a.id = 'amazon-login-sdk'; 
         a.src = 'https://api-cdn.amazon.com/sdk/login1.js?v=3';
         d.getElementById('amazon-root').appendChild(a);
     })(document);
@@ -45,6 +46,7 @@
         });
         amazon.Login.retrieveProfile(response.access_token, function(response) {
             AWS.config.region = 'eu-west-1';
+            /*
             var db = new AWS.DynamoDB();
             var params = {
                 TableName: 'Movies',
@@ -65,6 +67,30 @@
                     updateBrowserCount(data);
                 }
             });
+            */
+            /////////////
+            var params = {
+                TableName : 'Movies',
+                Item: {
+                    HashKey: 'haskey',
+                    NumAttribute: 1,
+                    BoolAttribute: true,
+                    ListAttribute: [1, 'two', false],
+                    MapAttribute: { foo: 'bar'},
+                    NullAttribute: null
+                }
+            };
+
+            var documentClient = new AWS.DynamoDB.DocumentClient();
+
+            documentClient.put(params, function(err, data) {
+                if (err) 
+                    console.log(err);
+                else 
+                    console.log(data);
+            });
+            
+            //////
             
             
         });

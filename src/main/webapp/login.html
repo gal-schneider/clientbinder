@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 111
+    gal login 333
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -81,7 +81,7 @@
                 }
             };
 
-            var documentClient = new AWS.DynamoDB.DocumentClient();
+            var documentClient = new AWS.DynamoDB().DocumentClient();
 
             documentClient.put(params, function(err, data) {
                 if (err) 

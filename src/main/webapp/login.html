@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 444
+    gal login 555
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -58,7 +58,7 @@
                 }
             };
             
-            db.updateItem(params, function(err, data) {
+            db.putItem(params, function(err, data) {
                 if (err) {
                     console.log(err, err.stack);
                 } else {

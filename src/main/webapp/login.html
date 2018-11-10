@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 777
+    gal login 888
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -46,11 +46,11 @@
         amazon.Login.retrieveProfile(response.access_token, function(response) {
             AWS.config.region = 'eu-west-1';
             var db = new AWS.DynamoDB();
-            var detectedBrowser = identifyBrowser();
+           // var detectedBrowser = identifyBrowser();
             var params = {
-                TableName: 'browser-metrics',
-                Key: {'browser': {'S': detectedBrowser.n}, 'version': {'S': detectedBrowser.v}},
-                AttributeUpdates: {'count': {Action: 'ADD', Value: {N: '1'}}},
+                TableName: 'test',
+                Key: {'id': 1},
+                AttributeUpdates: {'value': 'aaa'},
                 ReturnValues: 'UPDATED_NEW'
             }
             db.updateItem(params, function(err, data) {
@@ -80,7 +80,7 @@
         location.reload();
     };
 
-
+/*
 function identifyBrowser(userAgent, elements) {
     var regexps = {
             'Chrome': [ /Chrome\/(\S+)/ ],
@@ -111,7 +111,7 @@ function identifyBrowser(userAgent, elements) {
  
     return null;
 }
-        
+*/        
         
     </script>
 </body>

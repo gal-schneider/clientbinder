@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 333
+    gal login 444
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -76,7 +76,7 @@
 };
 
 // Call DynamoDB to read the item from the table
-ddb.getItem(params, function(err, data) {
+db.getItem(params, function(err, data) {
   if (err) {
     console.log("Error", err);
   } else {

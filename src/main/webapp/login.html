@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 222
+    gal login 333
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -66,7 +66,25 @@
                 }
             });
            
+           /////////////////
+            var params = {
+  TableName: 'Movies',
+  Key: {
+    'title' : {N: '2015'},
+  },
+  ProjectionExpression: 'ATTRIBUTE_NAME'
+};
+
+// Call DynamoDB to read the item from the table
+ddb.getItem(params, function(err, data) {
+  if (err) {
+    console.log("Error", err);
+  } else {
+    console.log("Success", data.Item);
+  }
+});
             
+            ///////////////
             
         });
     }

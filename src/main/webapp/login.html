@@ -84,6 +84,7 @@
                     console.log("Error", err);
                 } else {
                     console.log("Success", data.Item);
+                    document.getElementById('results').innerHTML = JSON.stringify(data.item);
                 }
             });
             

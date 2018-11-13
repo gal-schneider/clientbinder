@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 333
+    gal login 444
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -70,7 +70,8 @@
             var params = {
                 TableName: 'Movies',
                 Key: {
-                    'title' : {N: '2015'},
+                    'year' : {N: '2015'},
+                    "title": {S: "Gal 123"}
                 }
                 //, ProjectionExpression: 'ATTRIBUTE_NAME'
             };

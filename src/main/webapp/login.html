@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 555
+    gal login 333
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -54,7 +54,7 @@
                 TableName: 'Movies',
                  Item:{
                     "year": {N: "2016"},
-                    "title": {S: "Gal 123"}
+                    "title": {S: "Gal " + Date.now()}
                 }
             };
             
@@ -62,40 +62,33 @@
                 if (err) {
                     console.log(err, err.stack);
                 } else {
-                    updateBrowserCount(data);
+                    console.log(data);
                 }
             });
            
            /////////////////
             var params = {
-  TableName: 'Movies',
-  Key: {
-    'title' : {N: '2015'},
-  },
-  ProjectionExpression: 'ATTRIBUTE_NAME'
-};
+                TableName: 'Movies',
+                Key: {
+                    'title' : {N: '2015'},
+                }
+                //, ProjectionExpression: 'ATTRIBUTE_NAME'
+            };
 
-// Call DynamoDB to read the item from the table
-db.getItem(params, function(err, data) {
-  if (err) {
-    console.log("Error", err);
-  } else {
-    console.log("Success", data.Item);
-  }
-});
+            // Call DynamoDB to read the item from the table
+            db.getItem(params, function(err, data) {
+                if (err) {
+                    console.log("Error", err);
+                } else {
+                    console.log("Success", data.Item);
+                }
+            });
             
             ///////////////
             
         });
     }
 
-    // display current detected browser count
-    function updateBrowserCount(data) {
-        console.log(data);
-        document.getElementById('login').innerHTML = '';
-        document.getElementById('logout').innerHTML = 'Logout';
-        document.getElementById('browserCount').innerHTML = 'Successful authentications by people with browsers like yours: ' + data.Attributes.count.N;
-    }
     
     // login with Amazon when you click the Login link
     document.getElementById('login').onclick = function() {

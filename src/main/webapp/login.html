@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 888
+    gal login 999
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -78,6 +78,8 @@
                 , ProjectionExpression: 'year, new_value'
             };
 
+            setTimeout(function(){ 
+            
             // Call DynamoDB to read the item from the table
             db.getItem(params1, function(err, data) {
                 if (err) {
@@ -87,6 +89,9 @@
                     document.getElementById('results').innerHTML = JSON.stringify(data.item);
                 }
             });
+            
+            }, 3000);
+            
             
             ///////////////
             

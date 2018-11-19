@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 666
+    gal login 777
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -77,6 +77,7 @@
                     "title": {S: title1}
                 }
                // , ProjectionExpression: 'year, new_value'
+                ,ProjectionExpression: 'STRING_VALUE'
             };
 
             setTimeout(function(){ 

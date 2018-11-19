@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js"></script>
 </head>
 <body>
-    gal login 111
+    gal login 222
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -49,7 +49,7 @@
         amazon.Login.retrieveProfile(response.access_token, function(response) {
             AWS.config.region = 'eu-west-1';
             
-            var title = "now is " + Date.now();
+            var title1 = "now is " + Date.now();
             console.log(title);
             
             var db = new AWS.DynamoDB();
@@ -57,7 +57,7 @@
                 TableName: 'Movies',
                  Item:{
                     "year": {N: "value of" + title},
-                    "title": {S: title},
+                    "title": {S: title1},
                     "new_value": {S: "aaa"}
                 }
             };
@@ -74,7 +74,7 @@
             var params1 = {
                 TableName: 'Movies',
                 Key: {
-                    "title": {S: title}
+                    "title": {S: title1}
                 }
                 , ProjectionExpression: 'year, new_value'
             };

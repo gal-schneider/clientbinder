@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>AWS Javascript Browser SDK: DynamoDB</title>
+    <title>Main Binder</title>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
 </head>
 <body>
-    gal login 222
-    <br/>
-    https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js
-    <br/>
+    gal login 111
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -25,7 +22,6 @@
     // Login with Amazon
     window.onAmazonLoginReady = function() {
         
-//        amazon.Login.setClientId('amzn1.application-oa2-client.28747a3df5fa42ffbabadab162bb179c');
         amazon.Login.setClientId('amzn1.application-oa2-client.9e01bf3d77204837acd189ebac83dc11');
     };
     (function(d) {
@@ -73,24 +69,6 @@
                 }
             });
            
-           /////////////////
-            var params1 = {
-                TableName: 'Movies',
-                Key: {
-                    "title": {S: "The Big New Movie"}
-                }
-                //, "ProjectionExpression":"year"
-            };
-
-            db.getItem(params1, function(err, data) {
-                if (err) {
-                    console.log("Error", err);
-                } else {
-                    console.log("Success", data.Item);
-                    document.getElementById('results').innerHTML = JSON.stringify(data.item);
-                }
-            });
-             ///////////////
 
             var params2 = {
                 TableName: 'Movies',
@@ -108,10 +86,14 @@
                     document.getElementById('results').innerHTML = JSON.stringify(data.item);
                 }
             });
-                       
-                       
-                       
-            ///////////////
+             
+            ddb.deleteItem(params2, function(err, data) {
+              if (err) {
+                console.log("Error", err);
+              } else {
+                console.log("Success", data);
+              }
+            });            
             
         });
     }
@@ -128,7 +110,6 @@
         amazon.Login.logout();
         location.reload();
     };
-
 
         
     </script>

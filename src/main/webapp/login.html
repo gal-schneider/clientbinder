@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
 </head>
 <body>
-    gal login 444
+    gal login 555
     
     <br/>
     query: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.NodeJs.04.html
@@ -112,7 +112,7 @@
                 }
             };
 
-            docClient.query(params3, function(err, data) {
+            ddb.query(params3, function(err, data) {
                 if (err) {
                     console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
                 } else {

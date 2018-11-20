@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
 </head>
 <body>
-    gal login 222
+    gal login 333
     
     <br/>
     query: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.NodeJs.04.html
@@ -103,12 +103,13 @@
             ////////////
             var params3 = {
                 TableName : "Movies",
-                KeyConditionExpression: "#yr = :yyyy",
+                KeyConditionExpression: "title between :letter1 and :letter2",
                 ExpressionAttributeNames:{
                     "#yr": "year"
                 },
                 ExpressionAttributeValues: {
-                    ":yyyy": {'S': '2016'}
+                    ":letter1": "A",
+                    ":letter2": "L"
                 }
             };
 

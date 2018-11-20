@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
 </head>
 <body>
-    gal login 111
+    gal login 222
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -51,7 +51,7 @@
             var title1 = "now_is_" + Date.now();
             console.log(title1);
             
-            var db = new AWS.DynamoDB();
+            var ddb = new AWS.DynamoDB();
             var params = {
                 TableName: 'Movies',
                  Item:{
@@ -61,7 +61,7 @@
                 }
             };
             
-            db.putItem(params, function(err, data) {
+            ddb.putItem(params, function(err, data) {
                 if (err) {
                     console.log(err, err.stack);
                 } else {
@@ -78,11 +78,11 @@
                 //, "ProjectionExpression":"year"
             };
 
-            db.getItem(params2, function(err, data) {
+            ddb.getItem(params2, function(err, data) {
                 if (err) {
                     console.log("Error", err);
                 } else {
-                    console.log("Success", data.Item);
+                    console.log("Get Success", data.Item);
                     document.getElementById('results').innerHTML = JSON.stringify(data.item);
                 }
             });
@@ -91,7 +91,7 @@
               if (err) {
                 console.log("Error", err);
               } else {
-                console.log("Success", data);
+                console.log("Deleted Success", data);
               }
             });            
             

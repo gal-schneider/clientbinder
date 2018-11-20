@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
 </head>
 <body>
-    gal login 5555
+    gal login 444
     <br/>
     https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js
     <br/>
@@ -89,7 +89,7 @@
                     console.log("Success", data.Item);
                     document.getElementById('results').innerHTML = JSON.stringify(data.item);
                 }
-
+            }
              ///////////////
 
             setTimeout(function(){ 
@@ -100,17 +100,18 @@
                     "title": {S: title1}
                 }
                 //, "ProjectionExpression":"year"
-            };
+                
+                };
             
-            // Call DynamoDB to read the item from the table
-            db.getItem(params2, function(err, data) {
-                if (err) {
-                    console.log("Error", err);
-                } else {
-                    console.log("Success", data.Item);
-                    document.getElementById('results').innerHTML = JSON.stringify(data.item);
-                }
-            });
+                // Call DynamoDB to read the item from the table
+                db.getItem(params2, function(err, data) {
+                    if (err) {
+                        console.log("Error", err);
+                    } else {
+                        console.log("Success", data.Item);
+                        document.getElementById('results').innerHTML = JSON.stringify(data.item);
+                    }
+                });
             
             }, 3000);
             

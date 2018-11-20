@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
 </head>
 <body>
-    gal login 444
+    gal login 5555
     <br/>
     https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc12.min.js
     <br/>
@@ -52,7 +52,7 @@
         amazon.Login.retrieveProfile(response.access_token, function(response) {
             AWS.config.region = 'eu-west-1';
             
-            var title1 = "now is " + Date.now();
+            var title1 = "now_is_" + Date.now();
             console.log(title1);
             
             var db = new AWS.DynamoDB();
@@ -82,10 +82,28 @@
                 //, "ProjectionExpression":"year"
             };
 
+            db.getItem(params1, function(err, data) {
+                if (err) {
+                    console.log("Error", err);
+                } else {
+                    console.log("Success", data.Item);
+                    document.getElementById('results').innerHTML = JSON.stringify(data.item);
+                }
+
+             ///////////////
+
             setTimeout(function(){ 
+
+                var params2 = {
+                TableName: 'Movies',
+                Key: {
+                    "title": {S: title1}
+                }
+                //, "ProjectionExpression":"year"
+            };
             
             // Call DynamoDB to read the item from the table
-            db.getItem(params1, function(err, data) {
+            db.getItem(params2, function(err, data) {
                 if (err) {
                     console.log("Error", err);
                 } else {

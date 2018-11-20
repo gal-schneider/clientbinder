@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
 </head>
 <body>
-    gal login 999
+    gal login 111
     
     <br/>
     query: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.NodeJs.04.html
@@ -57,16 +57,16 @@
             
             var docClient = new AWS.DynamoDB.DocumentClient();
             
-            var table4 = "Movies";
+            var table = "Movies";
 
-            var year4 = 2015;
-            var title4 = "The Big New Movie";
+            var year = 2015;
+            var title = "The Big New Movie";
 
             var params = {
-                TableName:table4,
+                TableName:table,
                 Item:{
-                    "year": year4,
-                    "title": title4,
+                    "year": year,
+                    "title": title,
                     "info":{
                         "plot": "Nothing happens at all.",
                         "rating": 0
@@ -83,6 +83,50 @@
                 }
             });
 
+            
+            //////////
+            var params12 = {
+                TableName: table,
+                Key:{
+                    "year": year,
+                    "title": title
+                }
+            };
+
+            docClient.get(params12, function(err, data) {
+                if (err) {
+                    console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+                } else {
+                    console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
+                }
+            });            
+            
+            
+            var params13 = {
+                TableName:table,
+                Key:{
+                    "year": year,
+                    "title": title
+                },
+                UpdateExpression: "set info.rating = :r, info.plot=:p, info.actors=:a",
+                ExpressionAttributeValues:{
+                    ":r":5.5,
+                    ":p":"Everything happens all at once.",
+                    ":a":["Larry", "Moe", "Curly"]
+                },
+                ReturnValues:"UPDATED_NEW"
+            };
+
+            console.log("Updating the item...");
+            docClient.update(params13, function(err, data) {
+                if (err) {
+                    console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+                } else {
+                    console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+                }
+            });    
+            
+            
             /////////////////////
             //////////////////////
             /////////////////////

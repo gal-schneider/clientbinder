@@ -5,7 +5,11 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
 </head>
 <body>
-    gal login 222
+    gal login 444
+    
+    <br/>
+    query: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.NodeJs.04.html
+    <br/>
     <div id="amazon-root"></div>
     
     <div id="browserCount"></div>
@@ -94,6 +98,31 @@
                 console.log("Deleted Success", data);
               }
             });            
+          
+            
+            ////////////
+            var params3 = {
+                TableName : "Movies",
+                KeyConditionExpression: "#yr = :yyyy",
+                ExpressionAttributeNames:{
+                    "#yr": "year"
+                },
+                ExpressionAttributeValues: {
+                    ":yyyy": 2016
+                }
+            };
+
+            docClient.query(params3, function(err, data) {
+                if (err) {
+                    console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+                } else {
+                    console.log("Query succeeded.");
+                    data.Items.forEach(function(item) {
+                        console.log(" -", item.year + ": " + item.title);
+                    });
+                }
+            });
+            
             
         });
     }

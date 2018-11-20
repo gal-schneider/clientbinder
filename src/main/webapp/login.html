@@ -5,7 +5,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
 </head>
 <body>
-    gal login 444
+    gal login 888
     
     <br/>
     query: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.NodeJs.04.html
@@ -55,13 +55,49 @@
             var title1 = "now_is_" + Date.now();
             console.log(title1);
             
+            var docClient = new AWS.DynamoDB.DocumentClient();
+            
+            var table4 = "Movies";
+
+            var year4 = 2015;
+            var title4 = "The Big New Movie";
+
+            var params = {
+                TableName:table4,
+                Item:{
+                    "year": year4,
+                    "title": title4,
+                    "info":{
+                        "plot": "Nothing happens at all.",
+                        "rating": 0
+                    }
+                }
+            };
+
+            console.log("Adding a new item...");
+            docClient.put(params, function(err, data) {
+                if (err) {
+                    console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+                } else {
+                    console.log("Added item:", JSON.stringify(data, null, 2));
+                }
+            });
+
+            /////////////////////
+            //////////////////////
+            /////////////////////
+            ///////////////////////
+            
             var ddb = new AWS.DynamoDB();
+            
             var params = {
                 TableName: 'Movies',
                  Item:{
                     "year": {S: "value of" + title1},
                     "title": {S: title1},
-                    "new_value": {S: "aaa"}
+                    "new_value": {S: "aaa"},
+                    "info: {
+                    }
                 }
             };
             
